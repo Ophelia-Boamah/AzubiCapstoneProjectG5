@@ -38,10 +38,10 @@ const Signup = () => {
                   <FormControl isRequired>
                     <FormLabel htmlFor="number">Firstname</FormLabel>
                     <Input
-                      type="email"
-                      name="Email"
+                      type="text"
+                      name="Firstname"
                       // isDisabled
-                      placeholder="Enter email here"
+                      placeholder="Enter firstname here"
                       // value={values.UserCode}
                       // onChange={handleChange}
                       // onBlur={handleBlur}
@@ -51,10 +51,10 @@ const Signup = () => {
                   <FormControl isRequired>
                     <FormLabel htmlFor="number">Lastname</FormLabel>
                     <Input
-                      type="email"
-                      name="Email"
+                      type="text"
+                      name="Lastname"
                       // isDisabled
-                      placeholder="Enter email here"
+                      placeholder="Enter lastname here"
                       // value={values.UserCode}
                       // onChange={handleChange}
                       // onBlur={handleBlur}
@@ -77,9 +77,9 @@ const Signup = () => {
                   <FormControl mt={4} isRequired>
                     <FormLabel htmlFor="url">Username</FormLabel>
                     <Input
-                      type="password"
-                      name="Password"
-                      placeholder="Enter password here"
+                      type="text"
+                      name="Username"
+                      placeholder="Enter username here"
                       // value={values.Url}
                       // onChange={handleChange}
                       // onBlur={handleBlur}
