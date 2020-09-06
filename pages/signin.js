@@ -7,6 +7,8 @@ import {
   FormControl,
   FormLabel,
   Button,
+  Text,
+  Link,
 } from "@chakra-ui/core";
 import { Formik } from "formik";
 
@@ -20,12 +22,12 @@ const Signin = () => {
             width="500px"
             borderRadius="lg"
             p={20}
-            justify="center"
+            justify="flex-start"
             flexDirection="column"
             align="center"
             boxShadow="xl"
           >
-            <Heading fontSize="25px" mb={4} textAlign="center">
+            <Heading fontSize="25px" mb={10}>
               Sign in to your account
             </Heading>
             <Formik
@@ -35,41 +37,41 @@ const Signin = () => {
             >
               <Box width="100%">
                 <form>
-                  <FormControl isRequired>
-                    <FormLabel htmlFor="number">Email Address</FormLabel>
-                    <Input
-                      type="email"
-                      name="Email"
-                      // isDisabled
-                      placeholder="Enter email here"
-                      // value={values.UserCode}
-                      // onChange={handleChange}
-                      // onBlur={handleBlur}
-                      aria-describedby="userCode-helper-text"
-                    />
-                  </FormControl>
-                  <FormControl mt={4} isRequired>
-                    <FormLabel htmlFor="url">Password</FormLabel>
-                    <Input
-                      type="password"
-                      name="Password"
-                      placeholder="Enter password here"
-                      // value={values.Url}
-                      // onChange={handleChange}
-                      // onBlur={handleBlur}
-                      aria-describedby="url-helper-text"
-                    />
-                  </FormControl>
+                  <FormLabel htmlFor="number">Your Email</FormLabel>
+                  <Input
+                    type="email"
+                    name="Email"
+                    // value={values.UserCode}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
+                    aria-describedby="userCode-helper-text"
+                  />
+                  <FormLabel htmlFor="url" mt={4}>
+                    Your Password
+                  </FormLabel>
+                  <Input
+                    type="password"
+                    name="Password"
+                    // value={values.Url}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
+                    aria-describedby="url-helper-text"
+                  />
                   <Button
                     type="submit"
                     width="100%"
-                    variantColor="green"
+                    bg="blue.600"
                     aria-label="submit button"
-                    mt={10}
+                    mt={20}
+                    color="#fff"
                     // isLoading={isSubmitting}
                   >
-                    Submit
+                    Sign in to your account
                   </Button>
+                  <Text borderTop="1px solid #888" p={4} mt={6}>
+                    Don't have an account?{" "}
+                    <Link color="blue.600">Sign Up!</Link>
+                  </Text>
                 </form>
               </Box>
             </Formik>
