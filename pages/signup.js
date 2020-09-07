@@ -5,7 +5,6 @@ import {
   Heading,
   Input,
   FormControl,
-  FormLabel,
   Button,
   Grid,
 } from "@chakra-ui/core";
@@ -169,6 +168,7 @@ const Signup = () => {
                       bg="green.400"
                       aria-label="submit button"
                       mt={10}
+                      color="#fff"
                       isLoading={isSubmitting}
                     >
                       Submit

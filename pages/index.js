@@ -6,7 +6,6 @@ import {
   Button,
   Input,
   FormControl,
-  FormLabel,
 } from "@chakra-ui/core";
 
 import { Formik } from "formik";
