@@ -24,7 +24,7 @@ export default function Home() {
     >
       <Flex align="center" justify="space-between" px={10} py={40}>
         <Box mb={20}>
-          <Heading as="h1" fontSize="85px" lineHeights="shorter">
+          <Heading as="h1" fontSize="85px">
             2019 NATIONAL
           </Heading>
           <Heading as="h1" fontSize="100px">
@@ -55,69 +55,83 @@ export default function Home() {
             REGISTER NOW
           </Heading>
           <Formik
-          // enableReinitialize
-          // initialValues={{ UserCode: data.Usercode, Url: data.Url }}
-          // onSubmit={onSubmit}
+            enableReinitialize
+            initialValues={{ UserCode: data.Usercode, Url: data.Url }}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 400);
+            }}
           >
-            <Box width="100%">
-              <FormControl isRequired>
-                <Input
-                  type="text"
-                  name="Text"
-                  // isDisabled
-                  placeholder="Your Name"
-                  // value={values.UserCode}
-                  // onChange={handleChange}
-                  // onBlur={handleBlur}
-                  aria-describedby="userCode-helper-text"
-                />
-              </FormControl>
-              <FormControl mt={4} isRequired>
-                <Input
-                  type="password"
-                  name="Email"
-                  placeholder="Enter password here"
-                  // value={values.Url}
-                  // onChange={handleChange}
-                  // onBlur={handleBlur}
-                  aria-describedby="url-helper-text"
-                />
-              </FormControl>
-              <FormControl mt={4} isRequired>
-                <Input
-                  type="password"
-                  name="Email"
-                  placeholder="Phone Number"
-                  // value={values.Url}
-                  // onChange={handleChange}
-                  // onBlur={handleBlur}
-                  aria-describedby="url-helper-text"
-                />
-              </FormControl>
-              <FormControl mt={4} isRequired>
-                <Input
-                  type="password"
-                  name="Email"
-                  placeholder="Phone Number"
-                  // value={values.Url}
-                  // onChange={handleChange}
-                  // onBlur={handleBlur}
-                  aria-describedby="url-helper-text"
-                />
-              </FormControl>
-              <Button
-                type="submit"
-                width="100%"
-                variantColor="green"
-                aria-label="submit button"
-                mt={10}
-                bg="red.300"
-                color="#fff"
-                // isLoading={isSubmitting}
-              >
-                Submit
-              </Button>
-            </Box>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              values,
+            }) => (
+              <Box width="100%">
+                <form>
+                  <FormControl isRequired>
+                    <Input
+                      type="text"
+                      name="name"
+                      placeholder="Your Name"
+                      value={values.name}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="name-helper-text"
+                    />
+                  </FormControl>
+                  <FormControl mt={4} isRequired>
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="email-helper-text"
+                    />
+                  </FormControl>
+                  <FormControl mt={4} isRequired>
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone Number"
+                      value={values.phone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="phone-helper-text"
+                    />
+                  </FormControl>
+                  <FormControl mt={4} isRequired>
+                    <Input
+                      type="number"
+                      name="ticket"
+                      placeholder="Ticket"
+                      value={values.ticket}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="ticket-helper-text"
+                    />
+                  </FormControl>
+                  <Button
+                    type="submit"
+                    width="100%"
+                    variantColor="green"
+                    aria-label="submit button"
+                    mt={10}
+                    bg="red.300"
+                    color="#fff"
+                    isLoading={isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                </form>
+              </Box>
+            )}
           </Formik>
         </Flex>
       </Flex>
