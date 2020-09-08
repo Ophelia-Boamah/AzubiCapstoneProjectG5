@@ -6,7 +6,6 @@ import {
   Button,
   Input,
   FormControl,
-  FormLabel,
 } from "@chakra-ui/core";
 
 import { Formik } from "formik";
@@ -56,7 +55,7 @@ export default function Home() {
           </Heading>
           <Formik
             enableReinitialize
-            initialValues={{ UserCode: data.Usercode, Url: data.Url }}
+            initialValues={{ name: "", email: "", phone: "", ticket: "" }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));

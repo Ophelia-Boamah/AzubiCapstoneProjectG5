@@ -5,11 +5,27 @@ import {
   Heading,
   Input,
   FormControl,
-  FormLabel,
   Button,
   Grid,
 } from "@chakra-ui/core";
 import { Formik } from "formik";
+import Axios from "axios";
+
+const onSubmit = async (
+  values,
+  { setSubmitting, setErrors, setStatus, resetForm }
+) => {
+  try {
+    await Axios.post("http://52.165.239.221/auth/users/", values);
+    resetForm({});
+    setStatus({ success: true });
+    console.log(values);
+  } catch (error) {
+    setStatus({ success: false });
+    setSubmitting(false);
+    setErrors({ submit: error.message });
+  }
+};
 
 const Signup = () => {
   return (
@@ -32,22 +48,17 @@ const Signup = () => {
             <Formik
               enableReinitialize
               initialValues={{
-                firstName: "",
-                lastName: "",
+                first_name: "",
+                last_name: "",
                 address: "",
                 email: "",
                 password: "",
-                confirmPassword: "",
+                username: "",
                 address: "",
-                phoneNumber: "",
+                phone: "",
                 city: "",
               }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
-              }}
+              onSubmit={onSubmit}
             >
               {({
                 handleSubmit,
@@ -62,9 +73,9 @@ const Signup = () => {
                       <FormControl isRequired>
                         <Input
                           type="text"
-                          name="firstName"
+                          name="first_name"
                           placeholder="Enter firstname here"
-                          value={values.firstName}
+                          value={values.first_name}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby="firstName-helper-text"
@@ -74,9 +85,9 @@ const Signup = () => {
                       <FormControl isRequired>
                         <Input
                           type="text"
-                          name="lastName"
+                          name="last_name"
                           placeholder="Enter lastname here"
-                          value={values.lastName}
+                          value={values.last_name}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby="lastName-helper-text"
@@ -84,6 +95,7 @@ const Signup = () => {
                         />
                       </FormControl>
                     </Grid>
+
                     <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                       <FormControl mt={4} isRequired>
                         <Input
@@ -113,13 +125,13 @@ const Signup = () => {
                     <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                       <FormControl mt={4} isRequired>
                         <Input
-                          type="password"
-                          name="confirmPassword"
-                          placeholder="Confirm Password"
-                          value={values.confirmPassword}
+                          type="text"
+                          name="username"
+                          placeholder="Username"
+                          value={values.username}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          aria-describedby="confirmPassword-helper-text"
+                          aria-describedby="username-helper-text"
                           bg="gray.200"
                         />
                       </FormControl>
@@ -140,9 +152,9 @@ const Signup = () => {
                       <FormControl mt={4} isRequired>
                         <Input
                           type="tel"
-                          name="phoneNumber"
+                          name="phone"
                           placeholder="Phone Number"
-                          value={values.phoneNumber}
+                          value={values.phone}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby="phoneNumber-helper-text"
@@ -169,6 +181,7 @@ const Signup = () => {
                       bg="green.400"
                       aria-label="submit button"
                       mt={10}
+                      color="#fff"
                       isLoading={isSubmitting}
                     >
                       Submit
