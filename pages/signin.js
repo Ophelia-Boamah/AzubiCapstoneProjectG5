@@ -10,6 +10,23 @@ import {
   Link,
 } from "@chakra-ui/core";
 import { Formik } from "formik";
+import Axios from "axios";
+
+const onSubmit = async (
+  values,
+  { setSubmitting, setErrors, setStatus, resetForm }
+) => {
+  try {
+    await Axios.post("http://52.165.239.221/auth/jwt/create/", values);
+    resetForm({});
+    setStatus({ success: true });
+    console.log(values);
+  } catch (error) {
+    setStatus({ success: false });
+    setSubmitting(false);
+    setErrors({ submit: error.message });
+  }
+};
 
 const Signin = () => {
   return (
@@ -31,13 +48,8 @@ const Signin = () => {
             </Heading>
             <Formik
               enableReinitialize
-              initialValues={{ email: "", password: "" }}
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  alert(JSON.stringify(values, null, 2));
-                  setSubmitting(false);
-                }, 400);
-              }}
+              initialValues={{ username: "", password: "" }}
+              onSubmit={onSubmit}
             >
               {({
                 handleBlur,
@@ -50,12 +62,12 @@ const Signin = () => {
                   <form onSubmit={handleSubmit}>
                     <FormLabel htmlFor="number">Your Email</FormLabel>
                     <Input
-                      type="email"
-                      name="email"
-                      value={values.email}
+                      type="text"
+                      name="username"
+                      value={values.username}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="userCode-helper-text"
+                      aria-describedby="username-helper-text"
                     />
                     <FormLabel htmlFor="url" mt={4}>
                       Your Password
