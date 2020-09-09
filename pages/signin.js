@@ -8,27 +8,44 @@ import {
   Button,
   Text,
   Link,
+  useToast,
 } from "@chakra-ui/core";
-import { Formik } from "formik";
+import { Formik, FormikConsumer } from "formik";
 import Axios from "axios";
-
-const onSubmit = async (
-  values,
-  { setSubmitting, setErrors, setStatus, resetForm }
-) => {
-  try {
-    await Axios.post("http://52.165.239.221/auth/jwt/create/", values);
-    resetForm({});
-    setStatus({ success: true });
-    console.log(values);
-  } catch (error) {
-    setStatus({ success: false });
-    setSubmitting(false);
-    setErrors({ submit: error.message });
-  }
-};
+import { SignInSchema } from "../utils/validation";
 
 const Signin = () => {
+  const toast = useToast();
+  const onSubmit = async (
+    values,
+    { setSubmitting, setErrors, setStatus, resetForm }
+  ) => {
+    try {
+      await Axios.post("http://52.165.239.221/api/v1/rest-auth/login/", values);
+      resetForm({});
+      setStatus({ success: true });
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(values);
+    } catch (error) {
+      setStatus({ success: false });
+      toast({
+        title: "Error occured.",
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      setSubmitting(false);
+      setErrors({ submit: error.message });
+    }
+  };
+
   return (
     <Box overflowX="hidden">
       <Box bg="#fff" width="100%" height="100vh">
@@ -46,10 +63,10 @@ const Signin = () => {
             <Heading fontSize="25px" mb={10}>
               Sign in to your account
             </Heading>
-            <Formik
-              enableReinitialize
-              initialValues={{ username: "", password: "" }}
+            <FormikConsumer
+              initialValues={{ email: "", password: "" }}
               onSubmit={onSubmit}
+              validationSchema={SignInSchema}
             >
               {({
                 handleBlur,
@@ -62,12 +79,12 @@ const Signin = () => {
                   <form onSubmit={handleSubmit}>
                     <FormLabel htmlFor="number">Your Email</FormLabel>
                     <Input
-                      type="text"
-                      name="username"
-                      value={values.username}
+                      type="email"
+                      name="email"
+                      value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="username-helper-text"
+                      aria-describedby="email-helper-text"
                     />
                     <FormLabel htmlFor="url" mt={4}>
                       Your Password
