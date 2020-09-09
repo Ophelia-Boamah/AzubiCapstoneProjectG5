@@ -7,27 +7,47 @@ import {
   FormControl,
   Button,
   Grid,
+  useToast,
 } from "@chakra-ui/core";
 import { Formik } from "formik";
 import Axios from "axios";
-
-const onSubmit = async (
-  values,
-  { setSubmitting, setErrors, setStatus, resetForm }
-) => {
-  try {
-    await Axios.post("http://52.165.239.221/auth/users/", values);
-    resetForm({});
-    setStatus({ success: true });
-    console.log(values);
-  } catch (error) {
-    setStatus({ success: false });
-    setSubmitting(false);
-    setErrors({ submit: error.message });
-  }
-};
+import { SignupSchema } from "../utils/validation";
 
 const Signup = () => {
+  const toast = useToast();
+  const onSubmit = async (
+    values,
+    { setSubmitting, setErrors, setStatus, resetForm }
+  ) => {
+    try {
+      await Axios.post(
+        "http://52.165.239.221/api/v1/rest-auth/registration/",
+        values
+      );
+      resetForm({});
+      setStatus({ success: true });
+      toast({
+        title: "Account created.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      console.log(values);
+    } catch (error) {
+      setStatus({ success: false });
+      toast({
+        title: "Error occured.",
+        description: error.message,
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      setSubmitting(false);
+      setErrors({ submit: error.message });
+    }
+  };
+
   return (
     <Box overflowX="hidden">
       <Box bg="#fff" width="100%" height="100vh">
@@ -46,19 +66,19 @@ const Signup = () => {
               Sign Up Here
             </Heading>
             <Formik
-              enableReinitialize
               initialValues={{
                 first_name: "",
                 last_name: "",
                 address: "",
                 email: "",
                 password: "",
-                username: "",
+                password2: "",
                 address: "",
                 phone: "",
                 city: "",
               }}
               onSubmit={onSubmit}
+              validationSchema={SignupSchema}
             >
               {({
                 handleSubmit,
@@ -94,9 +114,6 @@ const Signup = () => {
                           bg="gray.200"
                         />
                       </FormControl>
-                    </Grid>
-
-                    <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                       <FormControl mt={4} isRequired>
                         <Input
                           type="text"
@@ -114,24 +131,22 @@ const Signup = () => {
                           type="password"
                           name="password"
                           placeholder="Password"
-                          value={values.Url}
+                          value={values.password}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          aria-describedby="password-helper-text"
+                          aria-describedby="password1-helper-text"
                           bg="gray.200"
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                       <FormControl mt={4} isRequired>
                         <Input
-                          type="text"
-                          name="username"
-                          placeholder="Username"
-                          value={values.username}
+                          type="password"
+                          name="password2"
+                          placeholder="Confirm Password"
+                          value={values.password2}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          aria-describedby="username-helper-text"
+                          aria-describedby="password2-helper-text"
                           bg="gray.200"
                         />
                       </FormControl>
@@ -147,8 +162,6 @@ const Signup = () => {
                           bg="gray.200"
                         />
                       </FormControl>
-                    </Grid>
-                    <Grid templateColumns="repeat(2, 1fr)" gap={6}>
                       <FormControl mt={4} isRequired>
                         <Input
                           type="tel"
@@ -178,7 +191,7 @@ const Signup = () => {
                       type="submit"
                       width="40%"
                       ml="30%"
-                      bg="green.400"
+                      colorScheme="green"
                       aria-label="submit button"
                       mt={10}
                       color="#fff"
