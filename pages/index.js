@@ -6,6 +6,7 @@ import {
   Button,
   Input,
   FormControl,
+  Grid,
 } from "@chakra-ui/core";
 
 import { Formik } from "formik";
@@ -13,7 +14,7 @@ import { Formik } from "formik";
 export default function Home() {
   return (
     <Box
-      bg="linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/images/conferencepeeps.jpg')"
+      bg="linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/images/eventreg.jpg')"
       bgPos="center"
       bgSize="cover"
       h="100vh"
@@ -21,118 +22,47 @@ export default function Home() {
       color="#fff"
       overflowX="hidden"
     >
-      <Flex align="center" justify="space-between" px={10} py={40}>
-        <Box mb={20}>
-          <Heading as="h1" fontSize="85px">
-            2019 NATIONAL
+      <Flex align="center" justify="center" px={10} py={40}>
+        <Box mb={20} textAlign="center">
+          <Heading as="h1" fontSize="6xl">
+            Your go-to partner for fast, easy, <br />
+            successful event registration.
           </Heading>
-          <Heading as="h1" fontSize="100px">
-            CONFERENCE
-          </Heading>
-          <Heading as="h2" fontSize="30px">
-            NOVEMBER 21-24,2019
-          </Heading>
-          <Text py={6}>
-            A surprisingly informed and slightly unexpected startup conference
+          <Text fontSize="xl" py={6}>
+            Our simple online event registration platform is powered by a team
+            of <br /> experts who give off their best daily because of you.
           </Text>
-          <Button bg="red.300" px={10}>
-            Sign In
-          </Button>
-        </Box>
-        <Flex
-          bg="white"
-          width="500px"
-          borderRadius="lg"
-          p={20}
-          justify="center"
-          flexDirection="column"
-          align="center"
-          boxShadow="xl"
-          color="#000"
-        >
-          <Heading fontSize="25px" mb={4} textAlign="center">
-            REGISTER NOW
-          </Heading>
-          <Formik
-            enableReinitialize
-            initialValues={{ name: "", email: "", phone: "", ticket: "" }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
-            }}
+
+          <Grid
+            templateColumns="repeat(2, 1fr)"
+            w={{ md: "80%" }}
+            gap={6}
+            mx="auto"
           >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              values,
-            }) => (
-              <Box width="100%">
-                <form>
-                  <FormControl isRequired>
-                    <Input
-                      type="text"
-                      name="name"
-                      placeholder="Your Name"
-                      value={values.name}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-describedby="name-helper-text"
-                    />
-                  </FormControl>
-                  <FormControl mt={4} isRequired>
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={values.email}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-describedby="email-helper-text"
-                    />
-                  </FormControl>
-                  <FormControl mt={4} isRequired>
-                    <Input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
-                      value={values.phone}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-describedby="phone-helper-text"
-                    />
-                  </FormControl>
-                  <FormControl mt={4} isRequired>
-                    <Input
-                      type="number"
-                      name="ticket"
-                      placeholder="Ticket"
-                      value={values.ticket}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      aria-describedby="ticket-helper-text"
-                    />
-                  </FormControl>
-                  <Button
-                    type="submit"
-                    width="100%"
-                    variantColor="green"
-                    aria-label="submit button"
-                    mt={10}
-                    bg="red.300"
-                    color="#fff"
-                    isLoading={isSubmitting}
-                  >
-                    Submit
-                  </Button>
-                </form>
-              </Box>
-            )}
-          </Formik>
-        </Flex>
+            <Button
+              type="submit"
+              height={16}
+              colorScheme="green"
+              aria-label="submit button"
+              mt={10}
+              color="#fff"
+              // isLoading={isSubmitting}
+            >
+              Check out Events
+            </Button>
+            <Button
+              type="submit"
+              height={16}
+              colorScheme="red"
+              aria-label="submit button"
+              mt={10}
+              color="#fff"
+              // isLoading={isSubmitting}
+            >
+              Get a Ticket
+            </Button>
+          </Grid>
+        </Box>
       </Flex>
     </Box>
   );
