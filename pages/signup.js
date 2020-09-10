@@ -191,7 +191,7 @@ const Signup = () => {
                       type="submit"
                       width="40%"
                       ml="30%"
-                      colorScheme="green"
+                      colorScheme="blue"
                       aria-label="submit button"
                       mt={10}
                       color="#fff"

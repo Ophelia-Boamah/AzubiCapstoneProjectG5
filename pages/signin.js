@@ -10,7 +10,7 @@ import {
   Link,
   useToast,
 } from "@chakra-ui/core";
-import { Formik, FormikConsumer } from "formik";
+import { Formik } from "formik";
 import Axios from "axios";
 import { SignInSchema } from "../utils/validation";
 
@@ -63,7 +63,7 @@ const Signin = () => {
             <Heading fontSize="25px" mb={10}>
               Sign in to your account
             </Heading>
-            <FormikConsumer
+            <Formik
               initialValues={{ email: "", password: "" }}
               onSubmit={onSubmit}
               validationSchema={SignInSchema}
@@ -100,7 +100,7 @@ const Signin = () => {
                     <Button
                       type="submit"
                       width="100%"
-                      bg="blue.600"
+                      colorScheme="blue"
                       aria-label="submit button"
                       mt={20}
                       color="#fff"
@@ -110,7 +110,9 @@ const Signin = () => {
                     </Button>
                     <Text borderTop="1px solid #888" p={4} mt={6}>
                       Don't have an account?{" "}
-                      <Link color="blue.600">Sign Up!</Link>
+                      <Link color="blue.600" href="/signup">
+                        Sign Up!
+                      </Link>
                     </Text>
                   </form>
                 </Box>
