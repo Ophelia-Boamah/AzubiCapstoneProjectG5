@@ -18,17 +18,16 @@ const Navbar = () => {
       w="100%"
       bg="white"
     >
-      <Heading>A-Teo</Heading>
+      <NextLink href="/" passHref>
+        <Link
+          _hover={{ textDecor: "none", color: "gray.800" }}
+          mr={10}
+          color="gray.600"
+        >
+          <Heading>A-Teo</Heading>
+        </Link>
+      </NextLink>
       <Flex align="center">
-        <NextLink href="/" passHref>
-          <Link
-            _hover={{ textDecor: "none", color: "gray.800" }}
-            mr={10}
-            color="gray.600"
-          >
-            Home
-          </Link>
-        </NextLink>
         <NextLink href="/signin">
           <Link
             _hover={{ textDecor: "none", color: "gray.800" }}
