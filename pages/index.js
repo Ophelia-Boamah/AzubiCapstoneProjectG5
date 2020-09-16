@@ -30,8 +30,9 @@ export default function Home() {
             successful event registration.
           </Heading>
           <Text fontSize="xl" py={6}>
-            A-Teo is a simple online event registration platform is powered by a
-            team <br /> of experts who give off their best daily because of you.
+            A-Teo is a simple online event registration platform which is
+            powered by a<br />
+            team of experts who give off their best daily because of you.
           </Text>
 
           <Grid
