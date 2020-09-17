@@ -1,9 +1,9 @@
-import React from 'react'
-import { Flex, Image, Link, Button, Heading } from '@chakra-ui/core'
-import NextLink from 'next/link'
+import React from 'react';
+import { Flex, Link, Button, Heading } from '@chakra-ui/core';
+import NextLink from 'next/link';
 
 const Navbar = () => {
-  const [auth, setAuth] = React.useState(false)
+  const [auth, setAuth] = React.useState(false);
   return (
     <Flex
       as='header'
@@ -50,7 +50,7 @@ const Navbar = () => {
         {auth && <Button colorScheme='blue'>Logout</Button>}
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

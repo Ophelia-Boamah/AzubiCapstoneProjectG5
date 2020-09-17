@@ -27,8 +27,6 @@ const eventslisting = () => {
     return <Alert>Error Occured</Alert>;
   }
 
-  console.log('data', data);
-
   return (
     <Box w={{ md: '90%' }} mx='auto'>
       <Flex align='center' justify='center'>
@@ -38,6 +36,8 @@ const eventslisting = () => {
           </Heading>
           {data.map((item) => (
             <EventCard
+              key={item.uid}
+              href={item.uid}
               title={item.title}
               text={item.details}
               location={item.location}
