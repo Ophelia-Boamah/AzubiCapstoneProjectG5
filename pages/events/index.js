@@ -1,68 +1,66 @@
-import { Box, Flex, Heading, Text, Button, Grid, Link } from '@chakra-ui/core';
-import NextLink from 'next/link';
+import React from 'react';
+import EventCard from '../../utils/EventCard';
+import { Heading, Box, Grid, Flex, Divider } from '@chakra-ui/core';
+import Topevents from '../../utils/Topevents';
+import useSWR from 'swr';
+import Calendar from '../../components/Calendar';
 
-export default function Home() {
+const eventslisting = () => {
+  const today = new Date();
+  const date =
+    today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+
+  const [selectedDate, setSelectedDate] = React.useState(date);
+
+  const API_URL =
+    'http://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
+
+  const fetcher = async (url) => await fetch(url).then((res) => res.json());
+
+  const { data, error } = useSWR(API_URL, fetcher);
+
+  if (!data) {
+    return <Box>Loading...</Box>;
+  }
+
+  if (error) {
+    return <Alert>Error Occured</Alert>;
+  }
+
+  console.log('data', data);
+
   return (
-    <Box
-      bg="linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/images/eventreg.jpg')"
-      bgPos='center'
-      bgSize='cover'
-      h='100vh'
-      w='100%'
-      color='#fff'
-      overflowX='hidden'
-    >
-      <Flex align='center' justify='center' px={10} pt='250px'>
-        <Box mb={20} textAlign='center'>
-          <Heading as='h1' fontSize='6xl'>
-            Your go-to partner for fast, easy, <br />
-            successful event registration.
+    <Box w={{ md: '90%' }} mx='auto'>
+      <Flex align='center' justify='center'>
+        <Box py={{ md: 10 }}>
+          <Heading as='h4' fontSize='2xl' mb={{ md: 2 }}>
+            Events Listing
           </Heading>
-          <Text fontSize='xl' py={6}>
-            A-Teo is a simple online event registration platform which is
-            powered by a<br />
-            team of experts who give off their best daily because of you.
-          </Text>
-
-          <Grid
-            templateColumns='repeat(2, 1fr)'
-            w={{ md: '80%' }}
-            gap={6}
-            mx='auto'
-          >
-            <NextLink href='/events' passHref>
-              <Link>
-                <Button
-                  type='submit'
-                  height={16}
-                  colorScheme='green'
-                  aria-label='submit button'
-                  mt={10}
-                  color='#fff'
-                  // isLoading={isSubmitting}
-                >
-                  Check out Events
-                </Button>
-              </Link>
-            </NextLink>
-            <Link href='/register'>
-              <Button
-                type='submit'
-                height={16}
-                colorScheme='red'
-                aria-label='submit button'
-                mt={10}
-                color='#fff'
-                onClick={() => '/register'}
-                href='/register'
-                // isLoading={isSubmitting}
-              >
-                Get a Ticket
-              </Button>
-            </Link>
-          </Grid>
+          {data.map((item) => (
+            <EventCard
+              title={item.title}
+              text={item.details}
+              location={item.location}
+            />
+          ))}
+        </Box>
+        <Box py={{ md: 40 }}>
+          <Calendar setSelectedDate={setSelectedDate} />
+          <Box>
+            <Heading as='h4' fontSize='2xl' mb={{ md: 4 }}>
+              Top Events
+            </Heading>
+            <Divider borderColor='gray.400' />
+            <Topevents />
+            <Topevents />
+            <Topevents />
+            <Topevents />
+            <Topevents />
+          </Box>
         </Box>
       </Flex>
     </Box>
   );
-}
+};
+
+export default eventslisting;
