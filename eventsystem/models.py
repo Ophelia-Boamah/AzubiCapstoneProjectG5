@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(max_length=15, blank=True)
     city = models.CharField(max_length=30, blank=True)
     confirm_password = models.CharField(max_length=30, blank=True)
-    registered_events = models.ManyToManyField(Events, )
+    # registered_events = models.ManyToManyField(Events, )
 
     def __str__(self):
         return self.email
