@@ -13,7 +13,7 @@ const eventslisting = () => {
   const [selectedDate, setSelectedDate] = React.useState(date);
 
   const API_URL =
-    'http://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
+    'https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
 
   const fetcher = async (url) => await fetch(url).then((res) => res.json());
 
