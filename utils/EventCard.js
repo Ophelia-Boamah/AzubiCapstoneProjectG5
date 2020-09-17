@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Heading, Box, Image, Flex, Text } from '@chakra-ui/core';
 
-const Events = () => {
+const EventCard = ({ title, text, location }) => {
   return (
     <Grid
       templateColumns='40% 60%'
@@ -20,17 +20,13 @@ const Events = () => {
       </Grid>
       <Box>
         <Heading as='h3' fontSize='3xl' mb={{ md: 6 }}>
-          Event Title
+          {title}
         </Heading>
-        <Text>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae
-          voluptates commodi, ut id nisi iste quo suscipit officiis fugit
-          laboriosam?
-        </Text>
-        <Text color='gray.400'>New Hamphire Avenue, MO, United States</Text>
+        <Text>{text}</Text>
+        <Text color='gray.400'>{location}</Text>
       </Box>
     </Grid>
   );
 };
 
-export default Events;
+export default EventCard;

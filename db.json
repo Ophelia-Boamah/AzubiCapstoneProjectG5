@@ -1,5 +1,7 @@
 {
-  "events": [{
+  "events": [
+    {
+      "uid": "event-title-1",
       "title": "Event Title 1",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
       "location": "New Hamphire Avenue, MO, United States",
@@ -7,6 +9,7 @@
       "time": "08:08am"
     },
     {
+      "uid": "event-title-2",
       "title": "Event Title 2",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
       "location": "New Hamphire Avenue, MO, United States",
@@ -14,6 +17,7 @@
       "time": "08:08am"
     },
     {
+      "uid": "event-title-3",
       "title": "Event Title 3",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
       "location": "New Hamphire Avenue, MO, United States",
@@ -21,6 +25,7 @@
       "time": "08:08am"
     },
     {
+      "uid": "event-title-4",
       "title": "Event Title 4",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
       "location": "New Hamphire Avenue, MO, United States",
@@ -28,6 +33,7 @@
       "time": "08:08am"
     },
     {
+      "uid": "event-title-5",
       "title": "Event Title 5",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
       "location": "New Hamphire Avenue, MO, United States",
