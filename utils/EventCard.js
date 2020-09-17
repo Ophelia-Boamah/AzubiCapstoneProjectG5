@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Heading, Box, Image, Flex, Text, Link } from '@chakra-ui/core';
 import NextLink from 'next/link';
 
-const EventCard = ({ title, text, location, href }) => {
+const EventCard = ({ title, text, location, href, img }) => {
   return (
     <NextLink passHref href='/events/[id]' as={`/events/${href}`}>
       <Link>
@@ -19,7 +19,7 @@ const EventCard = ({ title, text, location, href }) => {
                 <Text>OCT</Text>
               </Flex>
             </Box>
-            <Image h={{ md: 40 }} src='/images/windows12.jpg' />
+            <Image h={{ md: 40 }} src={`/images/${img}`} />
           </Grid>
           <Box>
             <Heading as='h3' fontSize='3xl' mb={{ md: 6 }}>
