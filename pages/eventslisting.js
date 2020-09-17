@@ -1,5 +1,5 @@
 import React from "react";
-import Events from "../utils/events";
+import Events from "../utils/Events";
 import { Heading, Box, Grid, Flex } from "@chakra-ui/core";
 import Topevents from "../utils/Topevents";
 import Calendar from "react-calendar";
