@@ -1,0 +1,38 @@
+{
+  "events": [{
+      "title": "Event Title 1",
+      "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
+      "location": "New Hamphire Avenue, MO, United States",
+      "date": "22nd Sept, 2020",
+      "time": "08:08am"
+    },
+    {
+      "title": "Event Title 2",
+      "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
+      "location": "New Hamphire Avenue, MO, United States",
+      "date": "30th Sept, 2020",
+      "time": "08:08am"
+    },
+    {
+      "title": "Event Title 3",
+      "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
+      "location": "New Hamphire Avenue, MO, United States",
+      "date": "22nd Oct, 2020",
+      "time": "08:08am"
+    },
+    {
+      "title": "Event Title 4",
+      "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
+      "location": "New Hamphire Avenue, MO, United States",
+      "date": "23rd Oct, 2020",
+      "time": "08:08am"
+    },
+    {
+      "title": "Event Title 5",
+      "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
+      "location": "New Hamphire Avenue, MO, United States",
+      "date": "22nd Jan, 2021",
+      "time": "08:08am"
+    }
+  ]
+}

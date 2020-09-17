@@ -1,13 +1,20 @@
-import "../styles/globals.css";
-import { ChakraProvider, CSSReset } from "@chakra-ui/core";
-import Navbar from "../utils/Navbars/Navbar";
+import '../styles/globals.css';
+import { Box, ChakraProvider, CSSReset } from '@chakra-ui/core';
+import { Provider as StyletronProvider } from 'styletron-react';
+import { styletron, debug } from '../styletron';
+
+import Navbar from '../utils/Navbars/Navbar';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <CSSReset />
-      <Navbar />
-      <Component {...pageProps} />
+      <StyletronProvider value={styletron} debug={debug} debugAfterHydration>
+        <CSSReset />
+        <Navbar />
+        <Box>
+          <Component {...pageProps} />
+        </Box>
+      </StyletronProvider>
     </ChakraProvider>
   );
 }
