@@ -36,11 +36,12 @@ const eventslisting = () => {
           </Heading>
           {data.map((item) => (
             <EventCard
-              key={item.uid}
-              href={item.uid}
+              key={item.id}
+              href={item.id}
               title={item.title}
               text={item.details}
               location={item.location}
+              img={item.img}
             />
           ))}
         </Box>
