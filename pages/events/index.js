@@ -13,7 +13,7 @@ const eventslisting = () => {
   const [selectedDate, setSelectedDate] = React.useState(date);
 
   const API_URL =
-    'http://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
+    'https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
 
   const fetcher = async (url) => await fetch(url).then((res) => res.json());
 
@@ -36,11 +36,12 @@ const eventslisting = () => {
           </Heading>
           {data.map((item) => (
             <EventCard
-              key={item.uid}
-              href={item.uid}
+              key={item.id}
+              href={item.id}
               title={item.title}
               text={item.details}
               location={item.location}
+              img={item.img}
             />
           ))}
         </Box>

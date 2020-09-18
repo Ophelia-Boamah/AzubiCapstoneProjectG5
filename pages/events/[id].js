@@ -7,7 +7,7 @@ const Event = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const API_URL = `http://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events/${id}`;
+  const API_URL = `https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events/${id}`;
 
   const fetcher = async (url) => await fetch(url).then((res) => res.json());
   const { data, error } = useSWR(API_URL, fetcher);
