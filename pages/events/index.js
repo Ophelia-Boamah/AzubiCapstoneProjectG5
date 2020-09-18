@@ -1,19 +1,19 @@
-import React from 'react';
-import EventCard from '../../utils/EventCard';
-import { Heading, Box, Grid, Flex, Divider } from '@chakra-ui/core';
-import Topevents from '../../utils/Topevents';
-import useSWR from 'swr';
-import Calendar from '../../components/Calendar';
+import React from "react";
+import EventCard from "../../utils/EventCard";
+import { Heading, Box, Grid, Flex, Divider } from "@chakra-ui/core";
+import Topevents from "../../utils/Topevents";
+import useSWR from "swr";
+import Calendar from "../../components/Calendar";
 
 const eventslisting = () => {
   const today = new Date();
   const date =
-    today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
 
   const [selectedDate, setSelectedDate] = React.useState(date);
 
   const API_URL =
-    'https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
+    "https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events";
 
   const fetcher = async (url) => await fetch(url).then((res) => res.json());
 
@@ -28,10 +28,10 @@ const eventslisting = () => {
   }
 
   return (
-    <Box w={{ md: '90%' }} mx='auto'>
-      <Flex align='center' justify='center'>
+    <Box w={{ md: "90%" }} mx="auto">
+      <Flex align="center" justify="center">
         <Box py={{ md: 10 }}>
-          <Heading as='h4' fontSize='2xl' mb={{ md: 2 }}>
+          <Heading as="h4" fontSize="2xl" mb={{ md: 2 }}>
             Events Listing
           </Heading>
           {data.map((item) => (
@@ -48,15 +48,40 @@ const eventslisting = () => {
         <Box py={{ md: 40 }}>
           <Calendar setSelectedDate={setSelectedDate} />
           <Box>
-            <Heading as='h4' fontSize='2xl' mb={{ md: 4 }}>
+            <Heading as="h4" fontSize="2xl" mb={{ md: 4 }}>
               Top Events
             </Heading>
-            <Divider borderColor='gray.400' />
-            <Topevents />
-            <Topevents />
-            <Topevents />
-            <Topevents />
-            <Topevents />
+            <Divider borderColor="gray.400" />
+            <Topevents
+              location="Abuja, Nigeria"
+              title="Google Developers Meetup"
+              img="/images/gdgmeetup.jpeg"
+              time="10:30am, 30th Sept, 2020"
+            />
+            <Topevents
+              location="CapeTown, South Africa"
+              title="Time with the Millionaires"
+              img="/images/wit2.jpg"
+              time="12:30pm, 22nd Jan, 2021"
+            />
+            <Topevents
+              location="Accra, Ghana"
+              title="Power Talk Conference"
+              img="/images/ticketing.jpg"
+              time="1:00pm, 23rd Oct, 2020"
+            />
+            <Topevents
+              location="Cairo, Egypt"
+              title="Design Pattern Conference"
+              img="/images/wit2.jpg"
+              time="10:30am, 30th Sept, 2020"
+            />
+            <Topevents
+              location="New Jersey, United States"
+              title="Women in Tech Conference"
+              img="/images/wit3.jpeg"
+              time="08:08am, 22nd Sept, 2020"
+            />
           </Box>
         </Box>
       </Flex>
