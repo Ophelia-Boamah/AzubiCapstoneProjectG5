@@ -24,7 +24,7 @@ const Signin = ({ setUser }) => {
   ) => {
     try {
       // await Axios.post('http://52.165.239.221/api/v1/rest-auth/login/', values)
-      await fire
+      await firebase
         .auth()
         .signInWithEmailAndPassword(values)
         .then((res) => setUser(res.data))
