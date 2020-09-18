@@ -41,8 +41,6 @@ const Navbar = () => {
             Events
           </Link>
         </NextLink>
-      </Flex>
-      <Flex align='center'>
         <NextLink href='/signin' passHref>
           <Link
             _hover={{ textDecor: 'none', color: 'gray.800' }}
