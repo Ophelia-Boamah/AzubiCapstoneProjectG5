@@ -2,11 +2,11 @@ import React from 'react';
 import { Flex, Link, Button, Heading } from '@chakra-ui/core';
 import NextLink from 'next/link';
 import firebase from '../../firebase';
-import { useUser } from '../../hooks/useUser';
+import { useUser } from '../../context/userContext';
 
 const Navbar = () => {
-  const { logout } = useUser();
-  const [auth, setAuth] = React.useState(false);
+  const { user } = useUser();
+  console.log('user', user);
   return (
     <Flex
       as='header'
@@ -41,26 +41,30 @@ const Navbar = () => {
             Events
           </Link>
         </NextLink>
-        <NextLink href='/signin' passHref>
-          <Link
-            _hover={{ textDecor: 'none', color: 'gray.800' }}
-            mr={10}
-            color='gray.600'
-          >
-            SignIn
-          </Link>
-        </NextLink>
-        <NextLink href='/signup' passHref>
-          <Link
-            _hover={{ textDecor: 'none', color: 'gray.800' }}
-            mr={10}
-            color='gray.600'
-          >
-            SignUp
-          </Link>
-        </NextLink>
-        {auth && (
-          <Button colorScheme='blue' onClick={logout()}>
+
+        {!user ? (
+          <Flex align='center'>
+            <NextLink href='/signin' passHref>
+              <Link
+                _hover={{ textDecor: 'none', color: 'gray.800' }}
+                mr={10}
+                color='gray.600'
+              >
+                SignIn
+              </Link>
+            </NextLink>
+            <NextLink href='/signup' passHref>
+              <Link
+                _hover={{ textDecor: 'none', color: 'gray.800' }}
+                mr={10}
+                color='gray.600'
+              >
+                SignUp
+              </Link>
+            </NextLink>
+          </Flex>
+        ) : (
+          <Button colorScheme='blue' onClick={firebase.auth().signOut()}>
             Logout
           </Button>
         )}

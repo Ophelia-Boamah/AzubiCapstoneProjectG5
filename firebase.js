@@ -9,8 +9,10 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 
-export default function initFirebase() {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
+// Check that `window` is in scope for the analytics module!
+if (typeof window !== 'undefined' && !firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  // To enable analytics. https://firebase.google.com/docs/analytics/get-started
 }
+
+export default firebase;

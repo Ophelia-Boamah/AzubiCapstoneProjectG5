@@ -5,19 +5,20 @@ import { useRouter } from 'next/router';
 import { styletron, debug } from '../styletron';
 
 import Navbar from '../utils/Navbars/Navbar';
-import { AnimatePresence } from 'framer-motion';
+
+import UserProvider from '../context/userContext';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const [user, setUser] = React.useState(null);
+
   return (
     <ChakraProvider>
       <StyletronProvider value={styletron} debug={debug} debugAfterHydration>
         <CSSReset />
-        <AnimatePresence initial={false} exitBeforeEnter>
-          <Navbar user={user} />
+        <UserProvider>
+          <Navbar />
           <Box>
-            <Component {...pageProps} setUser={setUser} />
+            <Component {...pageProps} />
           </Box>
           {router.pathname === '/' ? (
             ''
@@ -32,7 +33,7 @@ function MyApp({ Component, pageProps }) {
               &copy; 2020. A-Teo. All rights reserved.
             </Box>
           )}
-        </AnimatePresence>
+        </UserProvider>
       </StyletronProvider>
     </ChakraProvider>
   );
