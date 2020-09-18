@@ -1,49 +1,48 @@
 {
-  "events": [
-    {
+  "events": [{
       "id": "event-title-1",
-      "title": "Event Title 1",
+      "title": "Women in Tech Conference",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
-      "location": "New Hamphire Avenue, MO, United States",
+      "location": "New Jersey, United States",
       "date": "22nd Sept, 2020",
       "time": "08:08am",
-      "img": "windows12.jpg"
+      "img": "wit3.jpeg"
     },
     {
       "id": "event-title-2",
-      "title": "Event Title 2",
+      "title": "Google Developers Meetup",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
-      "location": "New Hamphire Avenue, MO, United States",
+      "location": "Abuja, Nigeria",
       "date": "30th Sept, 2020",
-      "time": "08:08am",
-      "img": "windows12.jpg"
+      "time": "10:30am",
+      "img": "gdgmeetup.jpeg"
     },
     {
       "id": "event-title-3",
-      "title": "Event Title 3",
+      "title": "Design Pattern Conference",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
-      "location": "New Hamphire Avenue, MO, United States",
+      "location": "Cairo, Egypt",
       "date": "22nd Oct, 2020",
       "time": "08:08am",
-      "img": "windows12.jpg"
+      "img": "wit2.jpg"
     },
     {
       "id": "event-title-4",
-      "title": "Event Title 4",
+      "title": "Power Talk Conference",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
-      "location": "New Hamphire Avenue, MO, United States",
+      "location": "Accra, Ghana",
       "date": "23rd Oct, 2020",
-      "time": "08:08am",
+      "time": "1:00pm",
       "img": "windows12.jpg"
     },
     {
       "id": "event-title-5",
-      "title": "Event Title 5",
+      "title": "Time with the Millionaires",
       "details": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae voluptates commodi, ut id nisi iste quo suscipit officiis fugit laboriosam?",
-      "location": "New Hamphire Avenue, MO, United States",
+      "location": "CapeTown, South Africa",
       "date": "22nd Jan, 2021",
-      "time": "08:08am",
-      "img": "windows12.jpg"
+      "time": "12:30pm",
+      "img": "millionaireconf.jpg"
     }
   ]
 }
