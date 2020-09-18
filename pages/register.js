@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Box,
   Flex,
@@ -7,56 +7,56 @@ import {
   Button,
   Input,
   FormControl,
-} from "@chakra-ui/core";
+} from '@chakra-ui/core';
 
-import { Formik } from "formik";
+import { Formik } from 'formik';
 
 const register = () => {
   return (
     <Box
       bg="linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),url('/images/conferencepeeps.jpg')"
-      bgPos="center"
-      bgSize="cover"
-      h="100vh"
-      w="100%"
-      color="#fff"
-      overflowX="hidden"
+      bgPos='center'
+      bgSize='cover'
+      h='100vh'
+      w='100%'
+      color='#fff'
+      overflowX='hidden'
     >
-      <Flex align="center" justify="space-between" px={10} py={40}>
+      <Flex align='center' justify='space-between' px={10} py={40}>
         <Box mb={20}>
-          <Heading as="h1" fontSize="85px">
-            2019 NATIONAL
+          <Heading as='h1' fontSize='85px'>
+            2021 NATIONAL
           </Heading>
-          <Heading as="h1" fontSize="100px">
+          <Heading as='h1' fontSize='100px'>
             CONFERENCE
           </Heading>
-          <Heading as="h2" fontSize="30px">
-            NOVEMBER 21-24,2019
+          <Heading as='h2' fontSize='30px'>
+            NOVEMBER 21-24,2021
           </Heading>
           <Text py={6}>
             A surprisingly informed and slightly unexpected startup conference
           </Text>
-          <Button bg="red.300" px={10}>
+          <Button bg='red.300' px={10}>
             Sign In
           </Button>
         </Box>
         <Flex
-          bg="white"
-          width="500px"
-          borderRadius="lg"
+          bg='white'
+          width='500px'
+          borderRadius='lg'
           p={20}
-          justify="center"
-          flexDirection="column"
-          align="center"
-          boxShadow="xl"
-          color="#000"
+          justify='center'
+          flexDirection='column'
+          align='center'
+          boxShadow='xl'
+          color='#000'
         >
-          <Heading fontSize="25px" mb={4} textAlign="center">
+          <Heading fontSize='25px' mb={4} textAlign='center'>
             REGISTER NOW
           </Heading>
           <Formik
             enableReinitialize
-            initialValues={{ name: "", email: "", phone: "", ticket: "" }}
+            initialValues={{ name: '', email: '', phone: '', ticket: '' }}
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 alert(JSON.stringify(values, null, 2));
@@ -71,60 +71,60 @@ const register = () => {
               isSubmitting,
               values,
             }) => (
-              <Box width="100%">
+              <Box width='100%'>
                 <form>
                   <FormControl isRequired>
                     <Input
-                      type="text"
-                      name="name"
-                      placeholder="Your Name"
+                      type='text'
+                      name='name'
+                      placeholder='Your Name'
                       value={values.name}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="name-helper-text"
+                      aria-describedby='name-helper-text'
                     />
                   </FormControl>
                   <FormControl mt={4} isRequired>
                     <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
+                      type='email'
+                      name='email'
+                      placeholder='Email'
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="email-helper-text"
+                      aria-describedby='email-helper-text'
                     />
                   </FormControl>
                   <FormControl mt={4} isRequired>
                     <Input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone Number"
+                      type='tel'
+                      name='phone'
+                      placeholder='Phone Number'
                       value={values.phone}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="phone-helper-text"
+                      aria-describedby='phone-helper-text'
                     />
                   </FormControl>
                   <FormControl mt={4} isRequired>
                     <Input
-                      type="number"
-                      name="ticket"
-                      placeholder="Ticket"
+                      type='number'
+                      name='ticket'
+                      placeholder='Ticket'
                       value={values.ticket}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby="ticket-helper-text"
+                      aria-describedby='ticket-helper-text'
                     />
                   </FormControl>
                   <Button
-                    type="submit"
-                    width="100%"
-                    variantColor="green"
-                    aria-label="submit button"
+                    type='submit'
+                    width='100%'
+                    variantColor='green'
+                    aria-label='submit button'
                     mt={10}
-                    bg="red.300"
-                    color="#fff"
+                    bg='red.300'
+                    color='#fff'
                     isLoading={isSubmitting}
                   >
                     Submit

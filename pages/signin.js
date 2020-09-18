@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Box,
   Flex,
@@ -9,43 +9,49 @@ import {
   Text,
   Link,
   useToast,
-  Divider
-} from '@chakra-ui/core'
-import { Formik } from 'formik'
-import Axios from 'axios'
-import { SignInSchema } from '../utils/validation'
+  Divider,
+} from '@chakra-ui/core';
+import { Formik } from 'formik';
+import Axios from 'axios';
+import { SignInSchema } from '../utils/validation';
+import firebase from '../firebasebase';
 
-const Signin = () => {
-  const toast = useToast()
+const Signin = ({ setUser }) => {
+  const toast = useToast();
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      await Axios.post('http://52.165.239.221/api/v1/rest-auth/login/', values)
-      resetForm({})
-      setStatus({ success: true })
+      // await Axios.post('http://52.165.239.221/api/v1/rest-auth/login/', values)
+      await fire
+        .auth()
+        .signInWithEmailAndPassword(values)
+        .then((res) => setUser(res.data))
+        .catch((err) => console.log(err));
+      resetForm({});
+      setStatus({ success: true });
       toast({
         title: 'Account created.',
         description: "We've created your account for you.",
         status: 'success',
         duration: 9000,
-        isClosable: true
-      })
-      console.log(values)
+        isClosable: true,
+      });
+      console.log(values);
     } catch (error) {
-      setStatus({ success: false })
+      setStatus({ success: false });
       toast({
         title: 'Error occured.',
         description: error.message,
         status: 'error',
         duration: 9000,
-        isClosable: true
-      })
-      setSubmitting(false)
-      setErrors({ submit: error.message })
+        isClosable: true,
+      });
+      setSubmitting(false);
+      setErrors({ submit: error.message });
     }
-  }
+  };
 
   return (
     <Box overflowX='hidden'>
@@ -74,7 +80,7 @@ const Signin = () => {
                 handleChange,
                 isSubmitting,
                 values,
-                handleSubmit
+                handleSubmit,
               }) => (
                 <Box width='100%'>
                   <form onSubmit={handleSubmit}>
@@ -131,7 +137,7 @@ const Signin = () => {
         </Flex>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Signin
+export default Signin;

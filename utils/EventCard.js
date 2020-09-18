@@ -1,6 +1,12 @@
 import React from 'react';
 import { Grid, Heading, Box, Image, Flex, Text, Link } from '@chakra-ui/core';
 import NextLink from 'next/link';
+import { motion } from 'framer-motion';
+
+const MotionImage = motion.custom(Image);
+const MotionBox = motion.custom(Box);
+
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const EventCard = ({ title, text, location, href, img, date }) => {
   return (
@@ -25,15 +31,30 @@ const EventCard = ({ title, text, location, href, img, date }) => {
                 {date}
               </Flex>
             </Box>
-            <Image h={{ md: 40 }} objectFit='cover' src={`/images/${img}`} />
+            <MotionBox
+              exit={{ opacity: 0 }}
+              transition={transition}
+              h={{ md: 40 }}
+              w={{ md: 56 }}
+              overflow='hidden'
+            >
+              <MotionImage
+                whileHover={{ scale: 1.1 }}
+                transition={transition}
+                w='100%'
+                h='100%'
+                objectFit='cover'
+                src={`/images/${img}`}
+              />
+            </MotionBox>
           </Grid>
-          <Box>
+          <MotionBox exit={{ opacity: 0 }} transition={transition}>
             <Heading as='h3' fontSize='3xl' mb={{ md: 6 }}>
               {title}
             </Heading>
             <Text>{text}</Text>
             <Text color='gray.400'>{location}</Text>
-          </Box>
+          </MotionBox>
         </Grid>
       </Link>
     </NextLink>

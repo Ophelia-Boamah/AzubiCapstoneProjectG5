@@ -15,6 +15,22 @@ import {
 import useSWR from 'swr';
 import EventCard from '../../utils/EventCard';
 import NextLink from 'next/link';
+import { motion } from 'framer-motion';
+
+const MotionBox = motion.custom(Box);
+const MotionFlex = motion.custom(Flex);
+
+const variants = {
+  animate: {
+    transition: {
+      delayChildren: 0.6,
+      staggerChildren: 0.04,
+      staggerDirection: 1,
+    },
+  },
+};
+
+const transition = { duration: 0.6, ease: [0.6, 0.1, -0.05, 0.9] };
 
 const Event = () => {
   const router = useRouter();
@@ -62,8 +78,21 @@ const Event = () => {
   }
 
   return (
-    <Box py={16}>
-      <Flex
+    <MotionBox
+      initial='initial'
+      animate='animate'
+      exit='exit'
+      variants={variants}
+      py={16}
+    >
+      <MotionFlex
+        initial={{ width: '12rem', height: '14rem', y: '-50%' }}
+        animate={{
+          width: '100vw',
+          height: '600px',
+          y: 0,
+          transition: { delay: 0.2, ...transition },
+        }}
         align='center'
         justify='center'
         direction='column'
@@ -73,10 +102,27 @@ const Event = () => {
         h='600px'
         bgImage={`linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(/images/${data.img})`}
       >
-        <Heading as='h2' textAlign='center' fontSize='6xl'>
-          {data.title}
-        </Heading>
-        <Flex align='center'>
+        <MotionBox
+          initial={{ opacity: 0, y: 0 }}
+          animate={{
+            opacity: 1,
+            y: 20,
+            transition: { delay: 1.2, ...transition },
+          }}
+        >
+          <Heading as='h2' textAlign='center' fontSize='6xl'>
+            {data.title}
+          </Heading>
+        </MotionBox>
+        <MotionFlex
+          initial={{ opacity: 0, y: 0 }}
+          animate={{
+            opacity: 1,
+            y: 20,
+            transition: { delay: 1.2, ...transition },
+          }}
+          align='center'
+        >
           <Text as='span' whiteSpace='nowrap' fontSize='xl'>
             {data.date}
           </Text>
@@ -92,14 +138,14 @@ const Event = () => {
           <Text as='span' whiteSpace='nowrap' fontSize='xl'>
             {data.location}
           </Text>
-        </Flex>
+        </MotionFlex>
 
-        <Box mt={4}>
+        <Box mt={10}>
           <Button w={56} h={12} colorScheme='orange'>
             Register Now!
           </Button>
         </Box>
-      </Flex>
+      </MotionFlex>
 
       <Box px={{ md: 20 }} my={{ md: 20 }}>
         <Grid templateColumns='60% 33%' gap={{ md: '7%' }}>
@@ -205,7 +251,7 @@ const Event = () => {
           </Box>
         </Grid>
       </Box>
-    </Box>
+    </MotionBox>
   );
 };
 

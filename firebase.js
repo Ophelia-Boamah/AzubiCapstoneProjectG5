@@ -1,5 +1,5 @@
-import * as firebase from 'firebase';
-import auth from 'firebase/auth';
+import firebase from 'firebase/app';
+import 'firebase/auth';
 
 var firebaseConfig = {
   apiKey: process.env.API_KEY,
@@ -12,5 +12,9 @@ var firebaseConfig = {
   // measurementId: "G-BCELNKY4R9",
 };
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+
+export default function initFirebase() {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
+}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Flex, Link, Button, Heading } from '@chakra-ui/core';
 import NextLink from 'next/link';
+import firebase from '../../firebase';
 
-const Navbar = () => {
+const Navbar = ({ user }) => {
+  console.log(user);
   const [auth, setAuth] = React.useState(false);
   return (
     <Flex
@@ -29,6 +31,17 @@ const Navbar = () => {
         </Link>
       </NextLink>
       <Flex align='center'>
+        <NextLink href='/events' passHref>
+          <Link
+            _hover={{ textDecor: 'none', color: 'gray.800' }}
+            mr={10}
+            color='gray.600'
+          >
+            Events
+          </Link>
+        </NextLink>
+      </Flex>
+      <Flex align='center'>
         <NextLink href='/signin' passHref>
           <Link
             _hover={{ textDecor: 'none', color: 'gray.800' }}
@@ -47,7 +60,11 @@ const Navbar = () => {
             SignUp
           </Link>
         </NextLink>
-        {auth && <Button colorScheme='blue'>Logout</Button>}
+        {auth && (
+          <Button colorScheme='blue' onClick={firebase.auth().signOut()}>
+            Logout
+          </Button>
+        )}
       </Flex>
     </Flex>
   );
