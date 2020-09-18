@@ -14,7 +14,7 @@ import {
 import { Formik } from 'formik';
 import Axios from 'axios';
 import { SignInSchema } from '../utils/validation';
-import firebase from '../firebasebase';
+import firebase from '../firebase';
 
 const Signin = ({ setUser }) => {
   const toast = useToast();
