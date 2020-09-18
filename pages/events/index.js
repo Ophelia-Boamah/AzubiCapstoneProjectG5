@@ -4,6 +4,11 @@ import { Heading, Box, Grid, Flex, Divider, Spinner } from '@chakra-ui/core';
 import Topevents from '../../utils/Topevents';
 import useSWR from 'swr';
 import Calendar from '../../components/Calendar';
+import { motion } from 'framer-motion';
+
+const MotionBox = motion.custom(Box);
+
+const transition = { duration: 0.6, ease: [0.43, 0.13, 0.23, 0.96] };
 
 const eventslisting = () => {
   const today = new Date();
@@ -38,7 +43,12 @@ const eventslisting = () => {
   }
 
   return (
-    <Box w={{ md: '90%' }} mx='auto'>
+    <MotionBox
+      exit={{ opacity: 0 }}
+      transition={transition}
+      w={{ md: '90%' }}
+      mx='auto'
+    >
       <Flex align='center' justify='center' pt={{ md: 40 }}>
         <Box w={{ md: '70%' }}>
           <Heading as='h4' fontSize='2xl' mb={{ md: 2 }}>
@@ -96,7 +106,7 @@ const eventslisting = () => {
           </Box>
         </Box>
       </Flex>
-    </Box>
+    </MotionBox>
   );
 };
 

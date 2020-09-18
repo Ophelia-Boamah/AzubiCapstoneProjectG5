@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Box,
   Flex,
@@ -7,46 +7,48 @@ import {
   FormControl,
   Button,
   Grid,
-  useToast
-} from '@chakra-ui/core'
-import { Formik } from 'formik'
-import Axios from 'axios'
-import { SignupSchema } from '../utils/validation'
+  useToast,
+} from '@chakra-ui/core';
+import { Formik } from 'formik';
+import Axios from 'axios';
+import { SignupSchema } from '../utils/validation';
+import firebase from '../firebase';
 
-const Signup = () => {
-  const toast = useToast()
+const Signup = ({ setUser }) => {
+  const toast = useToast();
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      await Axios.post(
-        'http://52.165.239.221/api/v1/rest-auth/registration/',
-        values
-      )
-      resetForm({})
-      setStatus({ success: true })
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(values)
+        .then((res) => setUser(res.data))
+        .catch((err) => console.log(err));
+      resetForm({});
+      setStatus({ success: true });
       toast({
         title: 'Account created.',
         description: "We've created your account for you.",
         status: 'success',
         duration: 9000,
-        isClosable: true
-      })
-      console.log(values)
+        isClosable: true,
+      });
+      console.log(values);
     } catch (error) {
-      setStatus({ success: false })
+      setStatus({ success: false });
       toast({
         title: 'Error occured.',
         description: error.message,
         status: 'error',
         duration: 9000,
-        isClosable: true
-      })
-      setSubmitting(false)
-      setErrors({ submit: error.message })
+        isClosable: true,
+      });
+      setSubmitting(false);
+      setErrors({ submit: error.message });
     }
-  }
+  };
 
   return (
     <Box overflowX='hidden'>
@@ -72,15 +74,15 @@ const Signup = () => {
             </Heading>
             <Formik
               initialValues={{
-                first_name: '',
-                last_name: '',
+                firstName: '',
+                lastName: '',
                 address: '',
                 email: '',
                 password: '',
                 password2: '',
                 address: '',
                 phone: '',
-                city: ''
+                city: '',
               }}
               onSubmit={onSubmit}
               validationSchema={SignupSchema}
@@ -90,7 +92,7 @@ const Signup = () => {
                 isSubmitting,
                 values,
                 handleChange,
-                handleBlur
+                handleBlur,
               }) => (
                 <Box width='100%'>
                   <form onSubmit={handleSubmit}>
@@ -220,7 +222,7 @@ const Signup = () => {
         </Flex>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
