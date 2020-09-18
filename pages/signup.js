@@ -10,11 +10,14 @@ import {
   useToast,
 } from '@chakra-ui/core';
 import { Formik } from 'formik';
-import Axios from 'axios';
 import { SignupSchema } from '../utils/validation';
+import { useUser } from '../context/userContext';
 import firebase from '../firebase';
+import { useRouter } from 'next/router';
 
-const Signup = ({ setUser }) => {
+const Signup = () => {
+  const { setUser } = useUser();
+  const router = useRouter();
   const toast = useToast();
   const onSubmit = async (
     values,
@@ -23,19 +26,39 @@ const Signup = ({ setUser }) => {
     try {
       await firebase
         .auth()
-        .createUserWithEmailAndPassword(values)
-        .then((res) => setUser(res.data))
-        .catch((err) => console.log(err));
+        .createUserWithEmailAndPassword(values.email, values.password)
+        .then((res) => {
+          let uid = res.user.uid;
+          firebase.firestore().collection('users').doc(uid).set({
+            user_uid: uid,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            phone: values.phone,
+            address: values.address,
+            city: values.city,
+          });
+          setUser(res.user);
+          toast({
+            title: 'Account created.',
+            description: "We've created your account for you.",
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+        })
+        .catch((err) =>
+          toast({
+            title: 'Error Ocurred.',
+            description: err.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          })
+        );
       resetForm({});
       setStatus({ success: true });
-      toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-      console.log(values);
+
+      // router.push('/signin');
     } catch (error) {
       setStatus({ success: false });
       toast({
@@ -85,7 +108,7 @@ const Signup = ({ setUser }) => {
                 city: '',
               }}
               onSubmit={onSubmit}
-              validationSchema={SignupSchema}
+              // validationSchema={SignupSchema}
             >
               {({
                 handleSubmit,
@@ -100,9 +123,9 @@ const Signup = ({ setUser }) => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='first_name'
+                          name='firstName'
                           placeholder='Enter firstname here'
-                          value={values.first_name}
+                          value={values.firstName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='firstName-helper-text'
@@ -113,9 +136,9 @@ const Signup = ({ setUser }) => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='last_name'
+                          name='lastName'
                           placeholder='Enter lastname here'
-                          value={values.last_name}
+                          value={values.lastName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='lastName-helper-text'

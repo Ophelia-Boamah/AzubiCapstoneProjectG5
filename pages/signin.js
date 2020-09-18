@@ -12,33 +12,47 @@ import {
   Divider,
 } from '@chakra-ui/core';
 import { Formik } from 'formik';
-import Axios from 'axios';
 import { SignInSchema } from '../utils/validation';
+import { useUser } from '../context/userContext';
+import { useRouter } from 'next/router';
 import firebase from '../firebase';
 
-const Signin = ({ setUser }) => {
+const Signin = () => {
+  const { setUser } = useUser();
   const toast = useToast();
+  const router = useRouter();
+
   const onSubmit = async (
     values,
-    { setSubmitting, setErrors, setStatus, resetForm }
+    { setSubmitting, setErrors, setStatus, resetForm, status }
   ) => {
     try {
-      // await Axios.post('http://52.165.239.221/api/v1/rest-auth/login/', values)
       await firebase
         .auth()
-        .signInWithEmailAndPassword(values)
-        .then((res) => setUser(res.data))
-        .catch((err) => console.log(err));
+        .signInWithEmailAndPassword(values.email, values.password)
+        .then((res) => {
+          setUser(res.user);
+          toast({
+            title: 'Account created.',
+            description: 'Successfully logged in',
+            status: 'success',
+            duration: 9000,
+            isClosable: true,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          toast({
+            title: 'Error ocurred.',
+            description: error.message,
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
+        });
       resetForm({});
       setStatus({ success: true });
-      toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-      console.log(values);
+      // router.push('/');
     } catch (error) {
       setStatus({ success: false });
       toast({
