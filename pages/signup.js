@@ -12,7 +12,7 @@ import {
 import { Formik } from 'formik';
 import Axios from 'axios';
 import { SignupSchema } from '../utils/validation';
-import firebase from '../firebase';
+import firebase from 'firebase/app';
 
 const Signup = ({ setUser }) => {
   const toast = useToast();
@@ -100,9 +100,9 @@ const Signup = ({ setUser }) => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='first_name'
+                          name='firstName'
                           placeholder='Enter firstname here'
-                          value={values.first_name}
+                          value={values.firstName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='firstName-helper-text'
@@ -113,9 +113,9 @@ const Signup = ({ setUser }) => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='last_name'
+                          name='lastName'
                           placeholder='Enter lastname here'
-                          value={values.last_name}
+                          value={values.lastName}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='lastName-helper-text'
