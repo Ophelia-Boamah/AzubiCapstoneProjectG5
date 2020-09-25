@@ -1,7 +1,7 @@
 {
   "build": {
     "env": {
-      "NEXT_PUBLIC_API": "http: //13.89.50.97/"
+      "NEXT_PUBLIC_API": "https: //13.89.50.97/"
     }
   }
 }
