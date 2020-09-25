@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Box,
   Flex,
@@ -10,41 +10,41 @@ import {
   Link,
   useToast,
   Divider,
-} from '@chakra-ui/core';
-import { Formik } from 'formik';
-import Axios from 'axios';
-import { SignInSchema } from '../utils/validation';
-import firebase from '../firebase';
+} from "@chakra-ui/core";
+import { useRouter } from "next/router";
+import { Formik } from "formik";
+import Axios from "axios";
+import { SignInSchema } from "../utils/validation";
+import firebase from "../firebase";
 
 const Signin = ({ setUser }) => {
+  const router = useRouter();
   const toast = useToast();
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      // await Axios.post('http://52.165.239.221/api/v1/rest-auth/login/', values)
-      await fire
-        .auth()
-        .signInWithEmailAndPassword(values)
-        .then((res) => setUser(res.data))
-        .catch((err) => console.log(err));
+      const result = await Axios.post("http://13.89.50.97/api/login/", values);
+      window.localStorage.setItem("auth", JSON.stringify(result.data.token));
+      setUser(result.data);
       resetForm({});
       setStatus({ success: true });
       toast({
-        title: 'Account created.',
-        description: "We've created your account for you.",
-        status: 'success',
+        title: "Login Successful.",
+        description: `Welcome ${result.data.first_name}`,
+        status: "success",
         duration: 9000,
         isClosable: true,
       });
-      console.log(values);
+      router.push("/events");
+      window.location.reload();
     } catch (error) {
       setStatus({ success: false });
       toast({
-        title: 'Error occured.',
+        title: "Error occured.",
         description: error.message,
-        status: 'error',
+        status: "error",
         duration: 9000,
         isClosable: true,
       });
@@ -54,26 +54,26 @@ const Signin = ({ setUser }) => {
   };
 
   return (
-    <Box overflowX='hidden'>
-      <Box bg='gray.100' width='100%' height='100vh'>
-        <Flex height='100%' align='center' justify='center'>
+    <Box overflowX="hidden">
+      <Box bg="gray.100" width="100%" height="100vh">
+        <Flex height="100%" align="center" justify="center">
           <Flex
-            bg='white'
-            width='500px'
-            borderRadius='lg'
+            bg="white"
+            width="500px"
+            borderRadius="lg"
             p={20}
-            justify='flex-start'
-            flexDirection='column'
-            align='center'
-            boxShadow='sm'
+            justify="flex-start"
+            flexDirection="column"
+            align="center"
+            boxShadow="sm"
           >
-            <Heading fontSize='25px' mb={10}>
+            <Heading fontSize="25px" mb={10}>
               Sign in to your account
             </Heading>
             <Formik
-              initialValues={{ email: '', password: '' }}
+              initialValues={{ username: "", password: "" }}
               onSubmit={onSubmit}
-              validationSchema={SignInSchema}
+              // validationSchema={SignInSchema}
             >
               {({
                 handleBlur,
@@ -82,50 +82,50 @@ const Signin = ({ setUser }) => {
                 values,
                 handleSubmit,
               }) => (
-                <Box width='100%'>
+                <Box width="100%">
                   <form onSubmit={handleSubmit}>
-                    <FormLabel htmlFor='number'>Your Email</FormLabel>
+                    <FormLabel htmlFor="username">Your Username</FormLabel>
                     <Input
-                      type='email'
-                      name='email'
-                      value={values.email}
+                      type="text"
+                      name="username"
+                      value={values.username}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby='email-helper-text'
+                      aria-describedby="username-helper-text"
                       h={12}
                     />
-                    <FormLabel htmlFor='url' mt={4}>
+                    <FormLabel htmlFor="password" mt={4}>
                       Your Password
                     </FormLabel>
                     <Input
-                      type='password'
-                      name='password'
+                      type="password"
+                      name="password"
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby='url-helper-text'
+                      aria-describedby="password-helper-text"
                       h={12}
                     />
                     <Button
-                      type='submit'
-                      width='100%'
-                      colorScheme='blue'
-                      aria-label='submit button'
+                      type="submit"
+                      width="100%"
+                      colorScheme="blue"
+                      aria-label="submit button"
                       mt={6}
                       h={12}
-                      color='#fff'
+                      color="#fff"
                       isLoading={isSubmitting}
                     >
                       Sign in to your account
                     </Button>
                     <Divider
                       pt={8}
-                      borderColor='gray.300'
-                      orientation='horizontal'
+                      borderColor="gray.300"
+                      orientation="horizontal"
                     />
                     <Text mt={6}>
-                      Don't have an account?{' '}
-                      <Link color='blue.600' href='/signup'>
+                      Don't have an account?{" "}
+                      <Link color="blue.600" href="/signup">
                         Sign Up!
                       </Link>
                     </Text>
