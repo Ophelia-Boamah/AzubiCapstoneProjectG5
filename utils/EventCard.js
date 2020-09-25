@@ -44,7 +44,7 @@ const EventCard = ({ title, text, location, href, img, date }) => {
                 w='100%'
                 h='100%'
                 objectFit='cover'
-                src={`/images/${img}`}
+                src='/images/wit3.jpeg'
               />
             </MotionBox>
           </Grid>

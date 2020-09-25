@@ -1,10 +1,7 @@
 {
   "build": {
     "env": {
-      "FIREBASE_API_KEY": "AIzaSyAroPgFQvGNuU75wesobaM8R5aRm7TY0po",
-      "FIREBASE_AUTH_DOMAIN": "azubicapstone.firebaseapp.com",
-      "FIREBASE_DATABASE_URL": "https://azubicapstone.firebaseio.com",
-      "FIREBASE_PROJECT_ID": "azubicapstone"
+      "NEXT_PUBLIC_API": "http: //13.89.50.97/"
     }
   }
 }

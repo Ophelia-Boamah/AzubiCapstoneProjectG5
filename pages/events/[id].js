@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import {
-  Alert,
   Box,
   Button,
   Flex,
@@ -14,17 +13,18 @@ import {
 } from '@chakra-ui/core';
 import useSWR from 'swr';
 import NextLink from 'next/link';
+import useAuth from '../../context/userContext';
+import api from '../../utils/auth/api';
+import { ProtectRoute } from '../../utils/auth/ProtectPage';
 
 const Event = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const API_URL = `https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events/${id}`;
-  const API = `https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events`;
+  const { loading } = useAuth();
+  const { data } = useSWR(loading ? false : `/events/${id}`, api.get);
 
-  const fetcher = async (url) => await fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(API_URL, fetcher);
-  const { data: events } = useSWR(API, fetcher);
+  const { data: events } = useSWR(loading ? false : '/events', api.get);
 
   if (!data) {
     return (
@@ -54,11 +54,7 @@ const Event = () => {
     );
   }
 
-  const filterEvents = events.filter((item) => item.id !== id);
-
-  if (error) {
-    return <Alert>Error Occured</Alert>;
-  }
+  const filterEvents = events?.data.filter((item) => item.id !== id);
 
   return (
     <Box py={16}>
@@ -70,28 +66,28 @@ const Event = () => {
         bgSize='cover'
         color='white'
         h='600px'
-        bgImage={`linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(/images/${data.img})`}
+        bgImage={`linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(/images/wit3.jpeg)`}
       >
         <Box>
           <Heading as='h2' textAlign='center' fontSize='6xl'>
-            {data.title}
+            {data?.data.description}
           </Heading>
         </Box>
         <Flex align='center'>
           <Text as='span' whiteSpace='nowrap' fontSize='xl'>
-            {data.date}
+            {data?.data.event_date}
           </Text>
           <Text as='span' whiteSpace='nowrap' mx={4} fontSize='2xl'>
             &middot;
           </Text>
           <Text as='span' whiteSpace='nowrap' fontSize='xl'>
-            {data.time}
+            {data.event_times}
           </Text>
           <Text as='span' whiteSpace='nowrap' mx={4} fontSize='2xl'>
             &middot;
           </Text>
           <Text as='span' whiteSpace='nowrap' fontSize='xl'>
-            {data.location}
+            {data.venue_address}
           </Text>
         </Flex>
 
@@ -188,15 +184,15 @@ const Event = () => {
                         w={48}
                         h={32}
                         objectFit='cover'
-                        src={`/images/${item.img}`}
+                        src='/images/wit3.jpeg'
                       />
                       <Box ml={4}>
                         <Heading as='h5' fontSize='xl'>
-                          {item.title}
+                          {item.description}
                         </Heading>
-                        <Text py={1}>{item.location}</Text>
-                        <Text py={1}>{item.date}</Text>
-                        <Text>{item.time}</Text>
+                        <Text py={1}>{item.venue_address}</Text>
+                        <Text py={1}>{item.event_date}</Text>
+                        <Text>{item.event_times}</Text>
                       </Box>
                     </Flex>
                   </Link>
@@ -210,4 +206,4 @@ const Event = () => {
   );
 };
 
-export default Event;
+export default ProtectRoute(Event);

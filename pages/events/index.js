@@ -1,10 +1,14 @@
 import React from 'react';
 import EventCard from '../../utils/EventCard';
-import { Heading, Box, Grid, Flex, Divider, Spinner } from '@chakra-ui/core';
+import { Heading, Box, Flex, Divider } from '@chakra-ui/core';
+import Skeleton from 'react-loading-skeleton';
 import Topevents from '../../utils/Topevents';
 import useSWR from 'swr';
 import Calendar from '../../components/Calendar';
 import { motion } from 'framer-motion';
+import { ProtectRoute } from '../../utils/auth/ProtectPage';
+import api from '../../utils/auth/api';
+import useAuth from '../../context/userContext';
 
 const MotionBox = motion.custom(Box);
 
@@ -17,30 +21,10 @@ const eventslisting = () => {
 
   const [selectedDate, setSelectedDate] = React.useState(date);
 
-  const API_URL =
-    'https://my-json-server.typicode.com/OphyBoamah/AzubiCapstoneProjectG5/events';
+  const { loading } = useAuth();
+  const { data, isValidating } = useSWR(loading ? false : '/events', api.get);
 
-  const fetcher = async (url) => await fetch(url).then((res) => res.json());
-
-  const { data, error } = useSWR(API_URL, fetcher);
-
-  if (!data) {
-    return (
-      <Flex align='center' justify='center' h='100vh' w='100vw'>
-        <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='orange.500'
-          size='xl'
-        />
-      </Flex>
-    );
-  }
-
-  if (error) {
-    return <Alert>Error Occured</Alert>;
-  }
+  const showSkeleton = isValidating || loading;
 
   return (
     <MotionBox
@@ -54,15 +38,19 @@ const eventslisting = () => {
           <Heading as='h4' fontSize='2xl' mb={{ md: 2 }}>
             Events Listing
           </Heading>
-          {data.map((item) => (
+
+          <Box>
+            {showSkeleton && <Skeleton height={200} width={120} count={5} />}
+          </Box>
+
+          {data?.data.map((item) => (
             <EventCard
               key={item.id}
               href={item.id}
-              title={item.title}
-              text={item.details}
-              location={item.location}
-              img={item.img}
-              date={item.date}
+              title={item.event_date}
+              text={item.description}
+              location={item.venue_address}
+              date={item.event_date}
             />
           ))}
         </Box>
@@ -110,4 +98,4 @@ const eventslisting = () => {
   );
 };
 
-export default eventslisting;
+export default ProtectRoute(eventslisting);
