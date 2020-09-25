@@ -1,61 +1,79 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import firebase from '../firebase';
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import Cookies from 'js-cookie';
+import Router, { useRouter } from 'next/router';
+import api from '../utils/auth/api';
 
-export const UserContext = createContext();
+//api here is an axios instance
 
-export default function UserContextComp({ children }) {
+const AuthContext = createContext({});
+
+export const AuthProvider = ({ children }) => {
+  const router = useRouter();
   const [user, setUser] = useState(null);
-  const [loadingUser, setLoadingUser] = useState(true); // Helpful, to update the UI accordingly.
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Listen authenticated user
-    const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
-      try {
-        if (user) {
-          // User is signed in.
-          const {
-            uid,
-            displayName,
-            email,
-            photoURL,
-            firstName,
-            lastName,
-            address,
-            city,
-            phone,
-          } = user;
-          // You could also look for the user doc in your Firestore (if you have one):
-          const userDoc = await firebase.firestore().doc(`users/${uid}`).get();
-          console.log('userDoc', userDoc);
-          setUser({
-            uid,
-            displayName,
-            email,
-            photoURL,
-            firstName,
-            lastName,
-            address,
-            city,
-            phone,
-          });
-        } else setUser(null);
-      } catch (error) {
-        // Most probably a connection error. Handle appropriately.
-      } finally {
-        setLoadingUser(false);
+    async function loadUserFromCookies() {
+      const token = Cookies.get('token');
+      if (token) {
+        console.log("Got a token in the cookies, let's see if it is valid");
+        api.defaults.headers.Authorization = `Bearer ${token.token}`;
+        const user = token;
+        if (user) setUser(user);
       }
-    });
-
-    // Unsubscribe auth listener on unmount
-    return () => unsubscriber();
+      setLoading(false);
+    }
+    loadUserFromCookies();
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user, setUser, loadingUser }}>
-      {children}
-    </UserContext.Provider>
-  );
-}
+  const login = async (params) => {
+    try {
+      const { data: token } = await api.post('api/login/', params);
+      if (token) {
+        Cookies.set('token', token, { expires: 60 });
+        api.defaults.headers.Authorization = `Bearer ${token.token}`;
+        setUser(token);
+        router.push('/events');
+      }
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
-// Custom hook that shorhands the context!
-export const useUser = () => useContext(UserContext);
+  const register = async (params) => {
+    try {
+      const res = await api.post('api/register/', params);
+      console.log(res);
+      router.push('/signin');
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const logout = () => {
+    Cookies.remove('token');
+    setUser(null);
+    router.push = '/';
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated: !!user,
+        user,
+        login,
+        loading,
+        logout,
+        register,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default function useAuth() {
+  const context = useContext(AuthContext);
+
+  return context;
+}

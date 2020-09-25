@@ -10,55 +10,30 @@ import {
   useToast,
 } from '@chakra-ui/core';
 import { Formik } from 'formik';
-import { SignupSchema } from '../utils/validation';
-import { useUser } from '../context/userContext';
-import firebase from '../firebase';
+
 import { useRouter } from 'next/router';
+import useAuth from '../context/userContext';
 
 const Signup = () => {
-  const { setUser } = useUser();
   const router = useRouter();
   const toast = useToast();
+  const { register } = useAuth();
   const onSubmit = async (
     values,
     { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(values.email, values.password)
-        .then((res) => {
-          let uid = res.user.uid;
-          firebase.firestore().collection('users').doc(uid).set({
-            user_uid: uid,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            phone: values.phone,
-            address: values.address,
-            city: values.city,
-          });
-          setUser(res.user);
-          toast({
-            title: 'Account created.',
-            description: "We've created your account for you.",
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-          });
-        })
-        .catch((err) =>
-          toast({
-            title: 'Error Ocurred.',
-            description: err.message,
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          })
-        );
+      await register(values);
+      toast({
+        title: 'Account created.',
+        description: "We've created your account for you.",
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
+
       resetForm({});
       setStatus({ success: true });
-
-      // router.push('/signin');
     } catch (error) {
       setStatus({ success: false });
       toast({
@@ -97,12 +72,12 @@ const Signup = () => {
             </Heading>
             <Formik
               initialValues={{
-                firstName: '',
-                lastName: '',
-                address: '',
+                first_name: '',
+                last_name: '',
+                username: '',
                 email: '',
                 password: '',
-                password2: '',
+                confirm_password: '',
                 address: '',
                 phone: '',
                 city: '',
@@ -123,9 +98,9 @@ const Signup = () => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='firstName'
+                          name='first_name'
                           placeholder='Enter firstname here'
-                          value={values.firstName}
+                          value={values.first_name}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='firstName-helper-text'
@@ -136,9 +111,9 @@ const Signup = () => {
                       <FormControl isRequired>
                         <Input
                           type='text'
-                          name='lastName'
+                          name='last_name'
                           placeholder='Enter lastname here'
-                          value={values.lastName}
+                          value={values.last_name}
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='lastName-helper-text'
@@ -146,7 +121,20 @@ const Signup = () => {
                           h={12}
                         />
                       </FormControl>
-                      <FormControl mt={4} isRequired>
+                      <FormControl isRequired>
+                        <Input
+                          type='text'
+                          name='username'
+                          placeholder='Username'
+                          value={values.username}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          aria-describedby='lastName-helper-text'
+                          bg='gray.200'
+                          h={12}
+                        />
+                      </FormControl>
+                      <FormControl isRequired>
                         <Input
                           type='text'
                           name='email'
@@ -159,33 +147,8 @@ const Signup = () => {
                           h={12}
                         />
                       </FormControl>
-                      <FormControl mt={4} isRequired>
-                        <Input
-                          type='password'
-                          name='password'
-                          placeholder='Password'
-                          value={values.password}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          aria-describedby='password1-helper-text'
-                          bg='gray.200'
-                          h={12}
-                        />
-                      </FormControl>
-                      <FormControl mt={4} isRequired>
-                        <Input
-                          type='password'
-                          name='password2'
-                          placeholder='Confirm Password'
-                          value={values.password2}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          aria-describedby='password2-helper-text'
-                          bg='gray.200'
-                          h={12}
-                        />
-                      </FormControl>
-                      <FormControl mt={4} isRequired>
+
+                      <FormControl isRequired>
                         <Input
                           type='text'
                           name='address'
@@ -198,7 +161,7 @@ const Signup = () => {
                           h={12}
                         />
                       </FormControl>
-                      <FormControl mt={4} isRequired>
+                      <FormControl isRequired>
                         <Input
                           type='tel'
                           name='phone'
@@ -211,7 +174,7 @@ const Signup = () => {
                           h={12}
                         />
                       </FormControl>
-                      <FormControl mt={4} isRequired>
+                      <FormControl isRequired>
                         <Input
                           type='text'
                           name='city'
@@ -220,6 +183,32 @@ const Signup = () => {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           aria-describedby='city-helper-text'
+                          bg='gray.200'
+                          h={12}
+                        />
+                      </FormControl>
+                      <FormControl isRequired>
+                        <Input
+                          type='password'
+                          name='password'
+                          placeholder='Password'
+                          value={values.password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          aria-describedby='password1-helper-text'
+                          bg='gray.200'
+                          h={12}
+                        />
+                      </FormControl>
+                      <FormControl isRequired>
+                        <Input
+                          type='password'
+                          name='confirm_password'
+                          placeholder='Confirm Password'
+                          value={values.confirm_password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          aria-describedby='password2-helper-text'
                           bg='gray.200'
                           h={12}
                         />

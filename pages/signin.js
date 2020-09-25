@@ -11,48 +11,32 @@ import {
   useToast,
   Divider,
 } from '@chakra-ui/core';
+import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import { SignInSchema } from '../utils/validation';
-import { useUser } from '../context/userContext';
-import { useRouter } from 'next/router';
-import firebase from '../firebase';
+import useAuth from '../context/userContext';
 
-const Signin = () => {
-  const { setUser } = useUser();
-  const toast = useToast();
+const Signin = ({ setUser }) => {
   const router = useRouter();
+  const toast = useToast();
+  const { login } = useAuth();
 
   const onSubmit = async (
     values,
-    { setSubmitting, setErrors, setStatus, resetForm, status }
+    { setSubmitting, setErrors, setStatus, resetForm }
   ) => {
     try {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(values.email, values.password)
-        .then((res) => {
-          setUser(res.user);
-          toast({
-            title: 'Account created.',
-            description: 'Successfully logged in',
-            status: 'success',
-            duration: 9000,
-            isClosable: true,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          toast({
-            title: 'Error ocurred.',
-            description: error.message,
-            status: 'error',
-            duration: 9000,
-            isClosable: true,
-          });
-        });
+      await login(values);
       resetForm({});
       setStatus({ success: true });
-      // router.push('/');
+      toast({
+        title: 'Login Successful.',
+        description: `Welcome`,
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+      router.push('/events');
     } catch (error) {
       setStatus({ success: false });
       toast({
@@ -85,7 +69,7 @@ const Signin = () => {
               Sign in to your account
             </Heading>
             <Formik
-              initialValues={{ email: '', password: '' }}
+              initialValues={{ username: '', password: '' }}
               onSubmit={onSubmit}
               validationSchema={SignInSchema}
             >
@@ -98,17 +82,17 @@ const Signin = () => {
               }) => (
                 <Box width='100%'>
                   <form onSubmit={handleSubmit}>
-                    <FormLabel htmlFor='number'>Your Email</FormLabel>
+                    <FormLabel htmlFor='username'>Your Username</FormLabel>
                     <Input
-                      type='email'
-                      name='email'
-                      value={values.email}
+                      type='text'
+                      name='username'
+                      value={values.username}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby='email-helper-text'
+                      aria-describedby='username-helper-text'
                       h={12}
                     />
-                    <FormLabel htmlFor='url' mt={4}>
+                    <FormLabel htmlFor='password' mt={4}>
                       Your Password
                     </FormLabel>
                     <Input
@@ -117,7 +101,7 @@ const Signin = () => {
                       value={values.password}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      aria-describedby='url-helper-text'
+                      aria-describedby='password-helper-text'
                       h={12}
                     />
                     <Button

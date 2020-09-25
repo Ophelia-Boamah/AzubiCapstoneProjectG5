@@ -5,35 +5,42 @@ import { useRouter } from 'next/router';
 import { styletron, debug } from '../styletron';
 
 import Navbar from '../utils/Navbars/Navbar';
-
-import UserProvider from '../context/userContext';
+import { AnimatePresence } from 'framer-motion';
+import { AuthProvider } from '../context/userContext';
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const [user, setUser] = React.useState(null);
+  const [token, setToken] = React.useState('');
 
+  React.useEffect(() => {
+    setToken(JSON.parse(window.localStorage.getItem('auth')));
+  }, []);
   return (
     <ChakraProvider>
       <StyletronProvider value={styletron} debug={debug} debugAfterHydration>
-        <CSSReset />
-        <UserProvider>
-          <Navbar />
-          <Box>
-            <Component {...pageProps} />
-          </Box>
-          {router.pathname === '/' ? (
-            ''
-          ) : (
-            <Box
-              as='footer'
-              mt={{ md: 16 }}
-              mb={6}
-              px={{ md: 20 }}
-              textAlign='center'
-            >
-              &copy; 2020. A-Teo. All rights reserved.
+        <AuthProvider>
+          <CSSReset />
+          <AnimatePresence initial={false} exitBeforeEnter>
+            <Navbar user={user} token={token} />
+            <Box>
+              <Component {...pageProps} setUser={setUser} />
             </Box>
-          )}
-        </UserProvider>
+            {router.pathname === '/' ? (
+              ''
+            ) : (
+              <Box
+                as='footer'
+                mt={{ md: 16 }}
+                mb={6}
+                px={{ md: 20 }}
+                textAlign='center'
+              >
+                &copy; 2020. A-Teo. All rights reserved.
+              </Box>
+            )}
+          </AnimatePresence>
+        </AuthProvider>
       </StyletronProvider>
     </ChakraProvider>
   );
