@@ -1,11 +1,11 @@
-import Axios from 'axios';
+import Axios from 'axios'
 
 const api = Axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API,
+  baseURL: 'http: //13.89.50.97/',
   headers: {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+    'Content-Type': 'application/json'
+  }
+})
 
-export default api;
+export default api
