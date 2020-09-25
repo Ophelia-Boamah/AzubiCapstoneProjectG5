@@ -1,5 +1,5 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Button,
@@ -10,12 +10,12 @@ import {
   Spinner,
   Text,
   Link,
-} from '@chakra-ui/core';
-import useSWR from 'swr';
-import NextLink from 'next/link';
-import useAuth from '../../context/userContext';
-import api from '../../utils/auth/api';
-import { ProtectRoute } from '../../utils/auth/ProtectPage';
+} from "@chakra-ui/core";
+import useSWR from "swr";
+import NextLink from "next/link";
+import useAuth from "../../context/userContext";
+import api from "../../utils/auth/api";
+import { ProtectRoute } from "../../utils/auth/ProtectPage";
 
 const Event = () => {
   const router = useRouter();
@@ -24,17 +24,17 @@ const Event = () => {
   const { loading } = useAuth();
   const { data } = useSWR(loading ? false : `/events/${id}`, api.get);
 
-  const { data: events } = useSWR(loading ? false : '/events', api.get);
+  const { data: events } = useSWR(loading ? false : "/events", api.get);
 
   if (!data) {
     return (
-      <Flex align='center' justify='center' h='100vh' w='100vw'>
+      <Flex align="center" justify="center" h="100vh" w="100vw">
         <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='orange.500'
-          size='xl'
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="orange.500"
+          size="xl"
         />
       </Flex>
     );
@@ -42,13 +42,13 @@ const Event = () => {
 
   if (!events) {
     return (
-      <Flex align='center' justify='center' h='100vh' w='100vw'>
+      <Flex align="center" justify="center" h="100vh" w="100vw">
         <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='orange.500'
-          size='xl'
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="orange.500"
+          size="xl"
         />
       </Flex>
     );
@@ -59,52 +59,54 @@ const Event = () => {
   return (
     <Box py={16}>
       <Flex
-        align='center'
-        justify='center'
-        direction='column'
-        bgPos='center'
-        bgSize='cover'
-        color='white'
-        h='600px'
+        align="center"
+        justify="center"
+        direction="column"
+        bgPos="center"
+        bgSize="cover"
+        color="white"
+        h="600px"
         bgImage={`linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)), url(/images/wit3.jpeg)`}
       >
         <Box>
-          <Heading as='h2' textAlign='center' fontSize='6xl'>
+          <Heading as="h2" textAlign="center" fontSize="6xl">
             {data?.data.description}
           </Heading>
         </Box>
-        <Flex align='center'>
-          <Text as='span' whiteSpace='nowrap' fontSize='xl'>
+        <Flex align="center">
+          <Text as="span" whiteSpace="nowrap" fontSize="xl">
             {data?.data.event_date}
           </Text>
-          <Text as='span' whiteSpace='nowrap' mx={4} fontSize='2xl'>
+          <Text as="span" whiteSpace="nowrap" mx={4} fontSize="2xl">
             &middot;
           </Text>
-          <Text as='span' whiteSpace='nowrap' fontSize='xl'>
+          <Text as="span" whiteSpace="nowrap" fontSize="xl">
             {data.event_times}
           </Text>
-          <Text as='span' whiteSpace='nowrap' mx={4} fontSize='2xl'>
+          <Text as="span" whiteSpace="nowrap" mx={4} fontSize="2xl">
             &middot;
           </Text>
-          <Text as='span' whiteSpace='nowrap' fontSize='xl'>
+          <Text as="span" whiteSpace="nowrap" fontSize="xl">
             {data.venue_address}
           </Text>
         </Flex>
 
         <Box mt={10}>
-          <Button w={56} h={12} colorScheme='orange'>
-            Register Now!
-          </Button>
+          <Link href="/register">
+            <Button w={56} h={12} colorScheme="orange">
+              Register Now!
+            </Button>
+          </Link>
         </Box>
       </Flex>
 
       <Box px={{ md: 20 }} my={{ md: 20 }}>
-        <Grid templateColumns='60% 33%' gap={{ md: '7%' }}>
+        <Grid templateColumns="60% 33%" gap={{ md: "7%" }}>
           <Box>
-            <Heading as='h4' fontSize='3xl' mb={{ md: 8 }}>
+            <Heading as="h4" fontSize="3xl" mb={{ md: 8 }}>
               Details of this event
             </Heading>
-            <Text lineHeight='1.7'>
+            <Text lineHeight="1.7">
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illum,
               fuga. Quibusdam aut similique quidem inventore perspiciatis
               consequatur minus, placeat laudantium iure porro eos, provident
@@ -171,23 +173,23 @@ const Event = () => {
           </Box>
 
           <Box>
-            <Heading as='h4' fontSize='2xl' mb={{ md: 12 }}>
+            <Heading as="h4" fontSize="2xl" mb={{ md: 12 }}>
               Other events you might like
             </Heading>
 
             <Box>
               {filterEvents.map((item) => (
                 <NextLink href={`/events/${item.id}`}>
-                  <Link _hover={{ textDecor: 'none' }}>
-                    <Flex key={item.id} my={6} align='center'>
+                  <Link _hover={{ textDecor: "none" }}>
+                    <Flex key={item.id} my={6} align="center">
                       <Image
                         w={48}
                         h={32}
-                        objectFit='cover'
-                        src='/images/wit3.jpeg'
+                        objectFit="cover"
+                        src="/images/wit3.jpeg"
                       />
                       <Box ml={4}>
-                        <Heading as='h5' fontSize='xl'>
+                        <Heading as="h5" fontSize="xl">
                           {item.description}
                         </Heading>
                         <Text py={1}>{item.venue_address}</Text>
