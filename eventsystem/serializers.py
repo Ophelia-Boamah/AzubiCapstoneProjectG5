@@ -1,10 +1,8 @@
 from rest_framework import serializers
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-from .models import CustomUser
+from .models import CustomUser, Event, Booking
 from django.contrib.auth import authenticate
-
-from .models import Event
 
 
 # User Serializer
@@ -77,3 +75,11 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = ('id', 'event_date', 'event_times', 'topic',
                   'description', 'room_capacity', 'speaker', 'venue_address')
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    """This class serializes the Event model instance into formats like JSON"""
+
+    class Meta:
+        model = Booking
+        fields = ('user', 'event')

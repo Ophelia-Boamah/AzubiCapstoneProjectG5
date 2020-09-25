@@ -1,17 +1,13 @@
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework import permissions
-from django.contrib.auth import login
-from .serializers import UserSerializer, RegisterSerializer, LoginUserSerializer
+from django.contrib.auth import login, authenticate
+from .serializers import UserSerializer, RegisterSerializer, LoginUserSerializer, EventSerializer, BookingSerializer
 from knox.models import AuthToken
 from rest_framework.response import Response
 from rest_framework import generics, permissions
 # from django.contrib.auth.models import User
-from .models import CustomUser
+from .models import CustomUser, Event, Booking
 import json
-from django.contrib.auth import authenticate
-from .serializers import EventSerializer
-from .models import Event
 from django.shortcuts import render
 # Register API
 
@@ -114,3 +110,15 @@ class DetailsView(generics.RetrieveUpdateDestroyAPIView):
     """This view performs GET, PUT and DELETE http requests to our api"""
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+
+class CreateView(generics.ListCreateAPIView):
+    """This view performs GET and POST http request to our api"""
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+
+class DetailsView(generics.RetrieveUpdateDestroyAPIView):
+    """This view performs GET, PUT and DELETE http requests to our api"""
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer

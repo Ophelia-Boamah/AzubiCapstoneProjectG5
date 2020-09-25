@@ -42,4 +42,11 @@ class Event(models.Model):
         return self.topic
 
 
-# push test
+class Booking(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name="booked_users")
+    event = models.ForeignKey(
+        Event, on_delete=models.CASCADE, related_name="booked_events")
+
+    def __str__(self):
+        return self.user.first_name + ' | ' + self.event.topic
